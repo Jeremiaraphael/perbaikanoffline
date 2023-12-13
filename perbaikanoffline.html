@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pokemon</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body>
+    <div class="container mt-4">
+      <div class="row" id="pokemonCardsRow"></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        fetch("https://pokeapi.co/api/v2/pokemon?limit=20")
+          .then((response) => response.json())
+          .then((data) => {
+            const pokemonCardsRow = document.getElementById("pokemonCardsRow");
+            data.results.forEach((pokemon) => {
+              const card = document.createElement("div");
+              card.className = "col-md-3 mb-5";
+
+              const cardBody = document.createElement("div");
+              cardBody.className = "card";
+
+              const cardTitle = document.createElement("h5");
+              cardTitle.className = "card-title text-center";
+              cardTitle.textContent = pokemon.name;
+
+              const cardLink = document.createElement("a");
+              cardLink.href = "#";
+              cardLink.className = "btn btn-primary";
+              cardLink.textContent = "Detail";
+
+              cardBody.appendChild(cardTitle);
+              cardBody.appendChild(cardLink);
+
+              card.appendChild(cardBody);
+
+              pokemonCardsRow.appendChild(card);
+            });
+          })
+          .catch((error) =>
+            console.error("Error fetching Pokemon data:", error)
+          );
+      });
+    </script>
+  </body>
+</html>
